@@ -14,12 +14,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<ICourseRepo, CourseRepo>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //builder.Services.Add(UserEndpoints);
 
 var app = builder.Build();
 
 app.UsersEndpoints();
+app.CoursesEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

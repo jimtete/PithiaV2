@@ -1,25 +1,23 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace PithiaV2.Models;
+namespace PithiaV2.Dtos.Course;
 
-public class Course
+public class CourseCreateDto
 {
-    [Key]
-    public int Id { get; set; }
-
     [Required]
     [MaxLength(5)]
     public string? CourseCharacteristic { get; set; }
-    
+
     [Required]
     public string? CourseName { get; set; }
-    
+
     [Required]
-    public int Specialization { get; set; } //0: Main, 1: Software Engineering, 2: Artificial Intelligence, 3: Networking
-    
+    public int Specialization { get; set; }
+
     [Required]
     public int TheoryHours { get; set; }
-    
+
+    [Required]
     public int LabHours { get; set; }
-    
+
 }

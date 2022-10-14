@@ -6,7 +6,7 @@ public class UserCreateDto
 {
 
     [Required]
-    [MaxLength(4)]
+    [MaxLength(5)]
     public string SchoolCharacteristic { get; set; }
 
     public int age { get; set; }
