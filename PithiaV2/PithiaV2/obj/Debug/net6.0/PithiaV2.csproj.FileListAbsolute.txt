@@ -25,3 +25,14 @@
 /home/ADDC/jimtete/GitHub/PithiaV2/PithiaV2/PithiaV2/obj/Debug/net6.0/ref/PithiaV2.dll
 /home/ADDC/jimtete/GitHub/PithiaV2/PithiaV2/PithiaV2/obj/Debug/net6.0/PithiaV2.pdb
 /home/ADDC/jimtete/GitHub/PithiaV2/PithiaV2/PithiaV2/obj/Debug/net6.0/PithiaV2.genruntimeconfig.cache
+/home/ADDC/jimtete/GitHub/PithiaV2/PithiaV2/PithiaV2/bin/Debug/net6.0/AutoMapper.dll
+/home/ADDC/jimtete/GitHub/PithiaV2/PithiaV2/PithiaV2/bin/Debug/net6.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+/home/ADDC/jimtete/GitHub/PithiaV2/PithiaV2/PithiaV2/bin/Debug/net6.0/Humanizer.dll
+/home/ADDC/jimtete/GitHub/PithiaV2/PithiaV2/PithiaV2/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.dll
+/home/ADDC/jimtete/GitHub/PithiaV2/PithiaV2/PithiaV2/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/home/ADDC/jimtete/GitHub/PithiaV2/PithiaV2/PithiaV2/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.Design.dll
+/home/ADDC/jimtete/GitHub/PithiaV2/PithiaV2/PithiaV2/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.Relational.dll
+/home/ADDC/jimtete/GitHub/PithiaV2/PithiaV2/PithiaV2/bin/Debug/net6.0/Microsoft.Extensions.Caching.Memory.dll
+/home/ADDC/jimtete/GitHub/PithiaV2/PithiaV2/PithiaV2/bin/Debug/net6.0/Microsoft.Extensions.DependencyInjection.dll
+/home/ADDC/jimtete/GitHub/PithiaV2/PithiaV2/PithiaV2/bin/Debug/net6.0/Npgsql.dll
+/home/ADDC/jimtete/GitHub/PithiaV2/PithiaV2/PithiaV2/bin/Debug/net6.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
