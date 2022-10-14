@@ -1,27 +1,18 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace PithiaV2.Models;
+namespace PithiaV2.Dtos.User;
 
-public class User
+public class UserCreateDto
 {
-    [Key]
-    public int Id { get; set; }
-    
+
     [Required]
-    [MaxLength(5)]
+    [MaxLength(4)]
     public string SchoolCharacteristic { get; set; }
-    
-    
+
     public int age { get; set; }
     
-    [Required]
     public string? FirstName { get; set; }
-    [Required]
     public string? LastName { get; set; }
 
-    [Required]
     public int BirthYear { get; set; }
-
-    
-
 }

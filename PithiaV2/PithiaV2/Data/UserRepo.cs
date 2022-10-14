@@ -12,28 +12,38 @@ public class UserRepo : IUserRepo
         _context = context;
     }
     
-    public Task SaveChange()
+    public async Task SaveChange()
     {
-        throw new NotImplementedException();
+        await _context.SaveChangesAsync();
     }
 
-    public Task<User> GetUserById(int id)
+    public async Task<User> GetUserById(int id)
     {
-        throw new NotImplementedException();
+        return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
     }
 
-    public Task<IEnumerable<User>> GetAllUsers()
+    public async Task<IEnumerable<User>> GetAllUsers()
     {
-        throw new NotImplementedException();
+        return await _context.Users!.ToListAsync();
     }
 
-    public Task CreateUser(User user)
+    public async Task CreateUser(User user)
     {
-        throw new NotImplementedException();
+        if (user == null)
+        {
+            throw new ArgumentNullException(nameof(user));
+        }
+
+        await _context.AddAsync(user);
     }
 
-    public Task DeleteUser(User user)
+    public void DeleteUser(User user)
     {
-        throw new NotImplementedException();
+        if (user == null)
+        {
+            throw new ArgumentNullException(nameof(user));
+        }
+
+        _context.Remove(user);
     }
 }

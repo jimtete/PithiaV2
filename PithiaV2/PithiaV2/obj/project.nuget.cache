@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "L3ZwuLrmGXxfIdMImgWwwC+TqCkJ3wTwpgaowZQp7feJe/gsZgzK7iYv0wnXMcm81AxNPA78n6SxVt3sFfPNuA==",
+  "dgSpecHash": "ZxEgRd6g+PPoy6uFeGtBUTOQjDq4QUWA0cziOSBGC98UmmfcLCblYLFCa7lxE7pUuecA9cR1NGNkHbneV4fAbg==",
   "success": true,
   "projectFilePath": "/home/ADDC/jimtete/GitHub/PithiaV2/PithiaV2/PithiaV2/PithiaV2.csproj",
   "expectedPackageFiles": [
+    "/home/ADDC/jimtete/.nuget/packages/automapper/12.0.0/automapper.12.0.0.nupkg.sha512",
+    "/home/ADDC/jimtete/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",
     "/home/ADDC/jimtete/.nuget/packages/microsoft.entityframeworkcore/6.0.10/microsoft.entityframeworkcore.6.0.10.nupkg.sha512",
     "/home/ADDC/jimtete/.nuget/packages/microsoft.entityframeworkcore.abstractions/6.0.10/microsoft.entityframeworkcore.abstractions.6.0.10.nupkg.sha512",
     "/home/ADDC/jimtete/.nuget/packages/microsoft.entityframeworkcore.analyzers/6.0.10/microsoft.entityframeworkcore.analyzers.6.0.10.nupkg.sha512",

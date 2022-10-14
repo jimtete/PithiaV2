@@ -10,6 +10,6 @@ public interface IUserRepo
     Task<IEnumerable<User>> GetAllUsers();
     Task CreateUser(User user);
 
-    Task DeleteUser(User user);
+    void DeleteUser(User user);
 
 }

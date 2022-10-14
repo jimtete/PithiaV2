@@ -1,16 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace PithiaV2.Models;
+namespace PithiaV2.Dtos.User;
 
-public class User
+public class UserUpdateDto
 {
-    [Key]
-    public int Id { get; set; }
-    
     [Required]
     [MaxLength(5)]
     public string SchoolCharacteristic { get; set; }
-    
     
     public int age { get; set; }
     
@@ -21,7 +17,4 @@ public class User
 
     [Required]
     public int BirthYear { get; set; }
-
-    
-
 }
