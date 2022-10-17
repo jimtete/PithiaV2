@@ -46,12 +46,24 @@ public static class CourseEndpoints
                 return Results.NotFound();
             }
 
-            mapper.Map<CourseUpdateDto>(course);
+            if (course.CourseCharacteristic != null)
+            {
+                courseModel.CourseCharacteristic = course.CourseCharacteristic;
+            }
+
+            if (course.TheoryHours != null)
+            {
+                courseModel.TheoryHours = course.TheoryHours;
+            }
+
+            if (course.LabHours != null)
+            {
+                courseModel.LabHours = course.LabHours;
+            }
             
-            
-            
+            var results = mapper.Map<CourseReadDto>(courseModel);
             await repo.SaveChanges();
-            return Results.NoContent();
+            return Results.Ok(results);
         });
         app.MapDelete("courses/{cid}",
             async (ICourseRepo repo, IMapper mapper, int cid) =>
