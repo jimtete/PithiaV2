@@ -22,6 +22,7 @@ public class User
     [Required]
     public int BirthYear { get; set; }
 
+    public List<StudentXCourse>? StudentXCourses { get; set; }
     
 
 }

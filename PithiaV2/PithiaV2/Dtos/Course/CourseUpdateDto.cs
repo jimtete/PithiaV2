@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-
+using PithiaV2.Models;
 namespace PithiaV2.Dtos.Course;
 
 public class CourseUpdateDto
@@ -13,7 +13,9 @@ public class CourseUpdateDto
     
     public int LabHours { get; set; }
     
-    
-    
-    
+    public List<Models.StudentXCourse>? StudentXCourses { get; set; }
+
+
+
+
 }

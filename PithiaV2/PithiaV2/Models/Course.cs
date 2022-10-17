@@ -21,5 +21,7 @@ public class Course
     public int TheoryHours { get; set; }
     
     public int LabHours { get; set; }
+
+    public List<StudentXCourse>? StudentXCourses { get; set; }
     
 }

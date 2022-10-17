@@ -4,8 +4,8 @@ public class StudentXCourseReadDto
 {
     public int Id { get; set; }
 
-    public int StudentId { get; set; }
-    public int CousreId { get; set; }
+    public Models.User User { get; set; }
+    public Models.Course Course { get; set; }
     
     
 }

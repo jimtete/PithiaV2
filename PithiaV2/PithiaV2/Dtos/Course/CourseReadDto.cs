@@ -13,6 +13,7 @@ public class CourseReadDto
     public int TheoryHours { get; set; }
     
     public int LabHours { get; set; }
-    
+
+    public List<Models.StudentXCourse> StudentXCourses { get; set; }
     
 }

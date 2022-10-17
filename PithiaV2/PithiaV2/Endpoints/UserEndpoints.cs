@@ -1,5 +1,6 @@
 using AutoMapper;
 using PithiaV2.Data;
+using PithiaV2.Dtos.StudentXCourse;
 using PithiaV2.Dtos.User;
 using PithiaV2.Models;
 
