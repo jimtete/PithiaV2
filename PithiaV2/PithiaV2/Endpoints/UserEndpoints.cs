@@ -40,7 +40,7 @@ public static class UserEndpoints
 
         });
 
-        app.MapPut("users{uid}",
+        app.MapPut("/users/{uid}",
             async (IMapper mapper, IUserRepo repo, int uid, UserUpdateDto userUpdateDto) =>
             {
                 var user = await repo.GetUserById(uid);
@@ -49,10 +49,35 @@ public static class UserEndpoints
                     return Results.NotFound();
                 }
 
-                mapper.Map<UserUpdateDto>(user);
+                if (userUpdateDto.SchoolCharacteristic != null)
+                {
+                    user.SchoolCharacteristic = userUpdateDto.SchoolCharacteristic;
+                }
+
+                if (userUpdateDto.age != null)
+                {
+                    user.age = userUpdateDto.age;
+                }
+
+                if (userUpdateDto.FirstName != null)
+                {
+                    user.FirstName = userUpdateDto.FirstName;
+                }
+
+                if (userUpdateDto.LastName != null)
+                {
+                    user.LastName = userUpdateDto.LastName;
+                }
+
+                if (userUpdateDto.BirthYear != null)
+                {
+                    user.BirthYear = userUpdateDto.BirthYear;
+                }
+                
+                var result = mapper.Map<UserReadDto>(user);
 
                 await repo.SaveChange();
-                return Results.NoContent();
+                return Results.Ok(result);
 
             });
 
