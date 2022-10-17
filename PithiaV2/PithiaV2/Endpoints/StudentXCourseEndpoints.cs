@@ -14,7 +14,9 @@ public static class StudentXCourseEndpoints
         app.MapGet("participations", async (IMapper mapper, IStudentXCourseRepo repo) =>
         {
             var StudentXCourses = await repo.GetAllStudies();
-            return Results.Ok(StudentXCourses);
+            var result = mapper.Map<IEnumerable<StudentXCourseReadDto>>(StudentXCourses);
+            
+            return Results.Ok(result);
 
         });
         
@@ -33,7 +35,7 @@ public static class StudentXCourseEndpoints
             });
 
         app.MapPost("participations/{uid}/{cid}", async (int uid,int cid,
-             IUserRepo userRepo, ICourseRepo courseRepo, IStudentXCourseRepo repo, IMapper mapper) =>
+             IUserRepo userRepo, ICourseRepo courseRepo, IStudentXCourseRepo repo) =>
         {
             var participation = new StudentXCourse();
             var user = await userRepo.GetUserById(uid);
@@ -56,11 +58,10 @@ public static class StudentXCourseEndpoints
             await repo.CreateStudies(participation);
             await repo.SaveChanges();
 
+            Console.WriteLine(course.StudentXCourses.Count);
             return Results.Ok("Participation Created");
 
         });
 
     }
-    
-    
 }
