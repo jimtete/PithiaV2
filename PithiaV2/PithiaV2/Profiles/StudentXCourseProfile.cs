@@ -11,6 +11,7 @@ public class StudentXCourseProfile : Profile
     {
         CreateMap<StudentXCourse, StudentXCourseReadDto>();
         CreateMap<StudentXCourseUpdateDto, StudentXCourse>();
+        CreateMap<StudentXCourseCreateDto, StudentXCourse>();
     }
     
 }
