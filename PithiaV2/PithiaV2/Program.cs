@@ -29,7 +29,6 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 var app = builder.Build();
 
 app.UseEndpointDefinitions();
-app.ParticipationEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
