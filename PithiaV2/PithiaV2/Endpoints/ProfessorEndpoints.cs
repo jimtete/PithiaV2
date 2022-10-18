@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PithiaV2.Data;
@@ -9,6 +11,7 @@ namespace PithiaV2.Endpoints;
 
 public class ProfessorEndpoints : IEndpointDefinition
 {
+
     public void DefineServices(IServiceCollection services)
     {
         services.AddScoped<IProfessorRepo, ProfessorRepo>();
@@ -16,16 +19,32 @@ public class ProfessorEndpoints : IEndpointDefinition
 
     internal async Task<IResult> CreateProfessor(IMapper mapper, IProfessorRepo repo, ProfessorCreateDto professor)
     {
-        var professorModel = mapper.Map<Professor>(professor);
 
-        if (professorModel.Rank < 0 || professorModel.Rank > 4)
+        var ValidationResults = professor.Validate(new ValidationContext(professor))
+            .Select(vr => vr.ErrorMessage)
+            .ToList();
+
+        if (ValidationResults.Count != 0)
         {
-            return Results.Problem($"Professor Rank {professorModel.Rank}: invalid");
+            var builder = new StringBuilder();
+
+            foreach (var vr in ValidationResults)
+            {
+                builder.Append(vr);
+            }
+            return Results.BadRequest(builder.ToString());
         }
         
+        
+        var professorModel = mapper.Map<Professor>(professor);
+
         await repo.CreateProfessor(professorModel);
         await repo.SaveChanges();
-
+        
+        /*if (professorModel.Rank < 0 || professorModel.Rank > 4)
+        {
+            return Results.Problem($"Professor Rank {professorModel.Rank}: invalid");
+        }*/
         var professorReadDto = mapper.Map<ProfessorReadDto>(professorModel);
         
         return Results.Created($"/professors/{professorReadDto.Id}",professorReadDto);
