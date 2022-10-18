@@ -94,6 +94,21 @@ public class ProfessorEndpoints : IEndpointDefinition
         {
             return Results.NotFound();
         }
+        
+        var ValidationResults = professor.Validate(new ValidationContext(professor))
+            .Select(vr => vr.ErrorMessage)
+            .ToList();
+
+        if (ValidationResults.Count != 0)
+        {
+            var builder = new StringBuilder();
+
+            foreach (var vr in ValidationResults)
+            {
+                builder.Append(vr);
+            }
+            return Results.BadRequest(builder.ToString());
+        }
 
         if (professor.Rank != null)
         {

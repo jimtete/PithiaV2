@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 using AutoMapper;
 using PithiaV2.Data;
 using PithiaV2.Dtos.Course;
@@ -32,6 +34,21 @@ public class CourseEndpoints : IEndpointDefinition
 
     internal async Task<IResult> CreateCourse(CourseCreateDto course, IMapper mapper, ICourseRepo repo)
     {
+        var ValidationResults = course.Validate(new ValidationContext(course))
+            .Select(vr => vr.ErrorMessage)
+            .ToList();
+        if (ValidationResults.Count != 0)
+        {
+            var builder = new StringBuilder();
+
+            foreach (var vr in ValidationResults)
+            {
+                builder.Append(vr);
+            }
+            return Results.BadRequest(builder.ToString());
+        }
+        
+        
         var courseModel = mapper.Map<Course>(course);
         await repo.CreateCourse(courseModel);
         await repo.SaveChanges();
