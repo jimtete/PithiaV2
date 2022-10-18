@@ -10,6 +10,7 @@ public class AppDbContext : DbContext
         
     }
 
+    public DbSet<Lecture> Lectures => Set<Lecture>();
     public DbSet<Professor> Professors => Set<Professor>();
     public DbSet<StudentXCourse> StudentXCourses => Set<StudentXCourse>();
     public DbSet<User> Users => Set<User>();
