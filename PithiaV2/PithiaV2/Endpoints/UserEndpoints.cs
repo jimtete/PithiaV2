@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using PithiaV2.Data;
 using PithiaV2.Dtos.StudentXCourse;
 using PithiaV2.Dtos.User;
@@ -95,6 +96,23 @@ public class UserEndpoints : IEndpointDefinition
         return Results.NoContent();
     }
 
+    internal async Task<IResult> ChangeGrade([FromBody] float grade, IMapper mapper, IUserRepo repo, int uid)
+    {
+        var user = await repo.GetUserById(uid);
+        if (user == null)
+        {
+            return Results.NotFound();
+        }
+
+        user.Grade = (float)Math.Round(grade,2);
+
+        await repo.SaveChange();
+        var result = mapper.Map<UserReadDto>(user);
+        
+        return  Results.Ok(result);
+
+    }
+    
     public void DefineEndpoints(WebApplication app)
     {
         //Get
@@ -103,6 +121,7 @@ public class UserEndpoints : IEndpointDefinition
         app.MapPost("users", CreateUser);
         app.MapPut("/users/{uid}", UpdateUserById);
         app.MapDelete("users/{uid}", DeleteUserById);
+        app.MapPut("/users/setgrade/{uid}", ChangeGrade);
     }
 
 }

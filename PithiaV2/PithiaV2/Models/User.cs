@@ -13,10 +13,14 @@ public class User
     
     
     public int age { get; set; }
+
+    public float Grade { get; set; }
     
     [Required]
+    [MaxLength(64)]
     public string? FirstName { get; set; }
     [Required]
+    [MaxLength(64)]
     public string? LastName { get; set; }
 
     [Required]

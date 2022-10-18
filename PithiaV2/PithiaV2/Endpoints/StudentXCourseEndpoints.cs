@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using PithiaV2.Data;
 using PithiaV2.Dtos.Course;
 using PithiaV2.Dtos.StudentXCourse;
@@ -79,6 +80,23 @@ public class StudentXCourseEndpoints : IEndpointDefinition
         return Results.Ok("Participation Created");
 
     }
+
+    internal async Task<IResult> GetMultipleParticipationsById([FromBody] int [] arr, IMapper mapper, IStudentXCourseRepo repo)
+    {
+        var Participations = new List<StudentXCourse>();
+
+        foreach (int id in arr)
+        {
+            var participation = await repo.GetStudiesById(id);
+            if (participation != null)
+            {
+                Participations.Add(participation);
+            }
+        }
+        
+        return Results.Ok(mapper.Map<IEnumerable<StudentXCourseReadDto>>(Participations));
+    }
+    
     
     
     public void DefineEndpoints(WebApplication app)
@@ -89,6 +107,8 @@ public class StudentXCourseEndpoints : IEndpointDefinition
         app.MapGet("participations/c/{cid}/u/{uid}",GetParticipationsByUserCourseId);
         app.MapGet("participations/{sxcid}", GetParticipationById);
         app.MapPost("participations/{uid}/{cid}", CreateParticipation);
-        
+        //Be trying something new
+        app.MapGet("participations/s/", GetMultipleParticipationsById);
+
     }
 }

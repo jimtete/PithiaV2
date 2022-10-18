@@ -8,6 +8,8 @@ public class UserReadDto
     
     public int age { get; set; }
     
+    public float Grade { get; set; }
+    
     public string? FirstName { get; set; }
     
     public string? LastName { get; set; }
