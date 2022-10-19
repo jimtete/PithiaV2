@@ -12,4 +12,8 @@ public interface ILectureRepo
 
     void DeleteLecture(Lecture lecture);
 
+    Task<List<Lecture>> GetLecturesByProfessorId(int pid);
+    Task<List<Lecture>> GetLecturesByCourseId(int cid);
+    Task<List<Lecture>> GetLecturesByProfessorCourseId(int pid, int cid);
+
 }

@@ -6,10 +6,11 @@ namespace PithiaV2.Data;
 public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-    {
-        
-    }
+    { }
 
+    
+    
+    
     public DbSet<Lecture> Lectures => Set<Lecture>();
     public DbSet<Professor> Professors => Set<Professor>();
     public DbSet<StudentXCourse> StudentXCourses => Set<StudentXCourse>();
