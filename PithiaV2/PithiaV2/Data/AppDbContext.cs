@@ -9,7 +9,7 @@ public class AppDbContext : DbContext
     { }
 
 
-
+    public DbSet<GradingBooklet> GradingBooklets => Set<GradingBooklet>();
     public DbSet<Lesson> Lessons => Set<Lesson>();
     public DbSet<Lecture> Lectures => Set<Lecture>();
     public DbSet<Professor> Professors => Set<Professor>();

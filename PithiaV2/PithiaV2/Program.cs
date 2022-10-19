@@ -12,6 +12,8 @@ builder.Services.AddEndpointDefinitions(typeof(Course));
 builder.Services.AddEndpointDefinitions(typeof(Professor));
 builder.Services.AddEndpointDefinitions(typeof(Lecture));
 builder.Services.AddEndpointDefinitions(typeof(Lesson));
+builder.Services.AddEndpointDefinitions(typeof(GradingBooklet));
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
