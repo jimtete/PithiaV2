@@ -10,6 +10,7 @@ builder.Services.AddEndpointDefinitions(typeof(User));
 builder.Services.AddEndpointDefinitions(typeof(StudentXCourse));
 builder.Services.AddEndpointDefinitions(typeof(Course));
 builder.Services.AddEndpointDefinitions(typeof(Professor));
+builder.Services.AddEndpointDefinitions(typeof(Lecture));
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
