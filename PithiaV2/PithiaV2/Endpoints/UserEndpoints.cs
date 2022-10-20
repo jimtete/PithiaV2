@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PithiaV2.Data;
+using PithiaV2.Dtos.GradingBooklet;
 using PithiaV2.Dtos.StudentXCourse;
 using PithiaV2.Dtos.User;
 using PithiaV2.EndpointManager;
@@ -32,11 +33,21 @@ public class UserEndpoints : IEndpointDefinition
         return Results.Ok(mapper.Map<IEnumerable<UserReadDto>>(Users));
     }
 
-    internal async Task<IResult> CreateUser(IUserRepo repo, IMapper mapper, UserCreateDto user)
+    internal async Task<IResult> CreateUser(IGradingBookletRepo gradingBookletRepo, IUserRepo repo, IMapper mapper, UserCreateDto user)
     {
         var userModel = mapper.Map<User>(user);
         await repo.CreateUser(userModel);
         await repo.SaveChange();
+
+        var UserBooklet = new GradingBookletCreateDto();
+        UserBooklet.UserId = userModel.Id;
+        var modelBooklet = mapper.Map<GradingBooklet>(UserBooklet);
+        modelBooklet.User = userModel;
+        modelBooklet.GradingSum = 0;
+        modelBooklet.PassedCourses = 0;
+
+        await gradingBookletRepo.CreateBooklet(modelBooklet);
+        await gradingBookletRepo.SaveChanges();
 
         var userReadDto = mapper.Map<UserReadDto>(userModel);
 

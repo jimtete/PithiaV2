@@ -23,7 +23,7 @@ public class PassingGradeEndpoints : IEndpointDefinition
     
     internal async Task<IResult> AddPassingGrade(IPassingGradesRepo repo, IProfessorRepo professorRepo, 
         IStudentXCourseRepo studentXCourseRepo, IGradingBookletRepo gradingBookletRepo, IMapper mapper,
-        PassingGradeCreateDto passingGradeCreateDto)
+        PassingGradeCreateDto passingGradeCreateDto, IUserRepo userRepo)
     {
         var ValidationResults = passingGradeCreateDto.Validate(new ValidationContext(passingGradeCreateDto))
             .Select(pg => pg.ErrorMessage)
@@ -58,6 +58,10 @@ public class PassingGradeEndpoints : IEndpointDefinition
             return Results.BadRequest("Booklet not found");
         }
 
+        
+        
+        
+
         var passingGrade = mapper.Map<PassingGrade>(passingGradeCreateDto);
         passingGrade.Professor = professor;
         passingGrade.GradingBooklet = booklet;
@@ -65,14 +69,63 @@ public class PassingGradeEndpoints : IEndpointDefinition
 
         await repo.CreatePassingGrade(passingGrade);
         await repo.SaveChanges();
+        
+        booklet.GradingSum += passingGradeCreateDto.Grade;
+        booklet.PassedCourses += 1;
+        await gradingBookletRepo.SaveChanges();
+
+        var userModel = await userRepo.GetUserById(passingGrade.GradingBooklet.UserId);
+        userModel.Grade = ((booklet.GradingSum) / (booklet.PassedCourses));
+        await userRepo.SaveChange();
 
         var results = mapper.Map<PassingGradeReadDto>(passingGrade);
         return Results.Created($"/grades/{results.Id}", results);
     }
+
+    internal async Task<IResult> GetGradeById(int pgid, IPassingGradesRepo repo, IMapper mapper)
+    {
+        var grade = await repo.GetPassingGradeById(pgid);
+        if (grade == null)
+        {
+            return Results.NotFound();
+        }
+
+        return Results.Ok(mapper.Map<PassingGradeReadDto>(grade));
+    }
+
+    internal async Task<IResult> GetGradesByBookletId(int gbid, IPassingGradesRepo repo, IMapper mapper)
+    {
+        var grades = await repo.GetAllPassingGradesByBookletId(gbid);
+        return Results.Ok(mapper.Map<List<PassingGradeReadDto>>(grades));
+    }
+
+    internal async Task<IResult> GetGradesByProfessorId(int pid, IPassingGradesRepo repo, IMapper mapper)
+    {
+        var grades = await repo.GetAllPassingGradesByProfessorId(pid);
+        return Results.Ok(mapper.Map<List<PassingGradeReadDto>>(grades));
+    }
+
+    internal async Task<IResult> DeleteGradeById(int pgid, IPassingGradesRepo repo)
+    {
+        var grade = await repo.GetPassingGradeById(pgid);
+        if (grade == null)
+        {
+            return Results.NotFound();
+        }
+        repo.DeletePassingGrade(grade);
+        await repo.SaveChanges();
+        
+        return Results.NoContent();
+    }
+    
     
     public void DefineEndpoints(WebApplication app)
     {
         app.MapPost("/grades", AddPassingGrade);
         app.MapGet("/grades", GetAllGrades);
+        app.MapGet("/grades/{pgid}", GetGradeById);
+        app.MapGet("/grades/booklet/{gbid}", GetGradesByBookletId);
+        app.MapGet("/grades/professor/{pid}", GetGradesByProfessorId);
+        app.MapDelete("/grades/{pgid}", DeleteGradeById);
     }
 }
