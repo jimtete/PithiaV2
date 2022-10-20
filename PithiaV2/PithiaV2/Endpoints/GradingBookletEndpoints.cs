@@ -31,8 +31,11 @@ public class GradingBookletEndpoints : IEndpointDefinition
 
             return Results.BadRequest(builder.ToString());
         }
-        
-        
+
+        if (await repo.GetBookletByUserId(gradingBookletCreateDto.UserId) != null)
+        {
+            return Results.BadRequest("There is already a booklet owned by this user");
+        }
         
         var user = await userRepo.GetUserById(gradingBookletCreateDto.UserId);
         if (user == null)
@@ -42,6 +45,8 @@ public class GradingBookletEndpoints : IEndpointDefinition
 
         var gradingBooklet = mapper.Map<GradingBooklet>(gradingBookletCreateDto);
         gradingBooklet.User = user;
+        gradingBooklet.GradingSum = 0;
+        gradingBooklet.PassedCourses = 0;
 
         await repo.CreateBooklet(gradingBooklet);
         await repo.SaveChanges();
@@ -52,9 +57,43 @@ public class GradingBookletEndpoints : IEndpointDefinition
 
 
     }
+
+    internal async Task<IResult> GetAllBooklets(IMapper mapper, IGradingBookletRepo repo)
+    {
+        var booklets = await repo.GetAllBooklets();
+        return Results.Ok(mapper.Map<List<GradingBookletReadDto>>(booklets));
+    }
+
+    internal async Task<IResult> GetBookletById(int gbid, IMapper mapper, IGradingBookletRepo repo)
+    {
+        var booklet = await repo.GetBookletById(gbid);
+        if (booklet == null)
+        {
+            return Results.NotFound();
+        }
+
+        return Results.Ok(mapper.Map<GradingBookletReadDto>(booklet));
+    }
+
+    internal async Task<IResult> DeleteBookletById(int gbid, IGradingBookletRepo repo)
+    {
+        var booklet = await repo.GetBookletById(gbid);
+        if (booklet == null)
+        {
+            return Results.NotFound();
+        }
+        
+        repo.DeleteBooklet(booklet);
+        repo.SaveChanges();
+        return Results.NoContent();
+
+    }
     
     public void DefineEndpoints(WebApplication app)
     {
+        app.MapGet("/gbooklet", GetAllBooklets);
         app.MapPost("/gbooklet", CreateNewBooklet);
+        app.MapGet("/gbooklet/{gbid}",GetBookletById);
+        app.MapDelete("/gbooklet/{gbid}", DeleteBookletById);
     }
 }

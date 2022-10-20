@@ -9,6 +9,7 @@ public interface IGradingBookletRepo
     Task<GradingBooklet> GetBookletById(int id);
     Task<List<GradingBooklet>> GetAllBooklets();
     Task CreateBooklet(GradingBooklet gradingBooklet);
+    Task<GradingBooklet> GetBookletByUserId(int uid);
 
     void DeleteBooklet(GradingBooklet gradingBooklet);
 

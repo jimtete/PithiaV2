@@ -46,4 +46,9 @@ public class GradingBookletRepo : IGradingBookletRepo
 
         _context.Remove(gradingBooklet);
     }
+
+    public async Task<GradingBooklet> GetBookletByUserId(int uid)
+    {
+        return await _context.GradingBooklets.FirstOrDefaultAsync(gb => gb.UserId == uid);
+    }
 }

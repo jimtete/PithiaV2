@@ -116,6 +116,7 @@ public class LessonEndpoints : IEndpointDefinition
         }
         
         repo.DeleteLesson(Lesson);
+        repo.SaveChanges();
         return Results.NoContent();
     }
     
